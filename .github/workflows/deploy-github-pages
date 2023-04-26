@@ -1,0 +1,30 @@
+name: Deploy Github Pages
+run-name: 部署Gihub Pages
+on:
+  push:
+    branches:
+      - 'main'
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    steps:
+      - name: 检出代码
+        uses: actions/checkout@v3
+        with:
+          ref: main
+      - name: 配置Node.js环境
+        uses: actions/setup-node@v2
+      - name: 配置pnpm，安装依赖
+        uses: pnpm/action-setup@v2
+        with:
+          version: 8.2.0
+          run_install: true
+      # - name: 安装依赖
+      #   run: pnpm i
+      - name: 构建程序
+        run: pnpm build
+      - name: 部署产物
+        uses: actions/upload-pages-artifact@v1
+        with:
+          path: dist/
+      
