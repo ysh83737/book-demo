@@ -1,5 +1,5 @@
-name: Deploy Github Pages
-run-name: 部署Gihub Pages
+name: Deploy GitHub Pages
+run-name: 部署GitHub Pages
 on:
   push:
     branches:
@@ -23,8 +23,11 @@ jobs:
       #   run: pnpm i
       - name: 构建程序
         run: pnpm build
-      - name: 部署产物
+      - name: 上传产物
         uses: actions/upload-pages-artifact@v1
         with:
           path: dist/
+      - name: 部署GitHub Pages
+        id: deployment
+        uses: actions/deploy-pages@v2
       
