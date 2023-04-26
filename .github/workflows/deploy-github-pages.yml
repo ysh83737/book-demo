@@ -13,9 +13,6 @@ concurrency:
   cancel-in-progress: false
 jobs:
   build:
-    environment:
-      name: github-pages
-      url: ${{ steps.deployment.outputs.page_url }}
     runs-on: ubuntu-latest
     steps:
       - name: 检出代码
@@ -37,7 +34,13 @@ jobs:
         uses: actions/upload-pages-artifact@v1
         with:
           path: dist/
+  deploy:
+    environment:
+      name: github-pages
+      url: ${{ steps.deployment.outputs.page_url }}
+    runs-on: ubuntu-latest
+    needs: build
+    steps:
       - name: 部署GitHub Pages
         id: deployment
         uses: actions/deploy-pages@v2
-      
