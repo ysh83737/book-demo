@@ -1,0 +1,28 @@
+name: Vite Build Demo
+run-name: 使用GitHub Actions执行vite应用构建，并部署Gihub Pages
+on:
+  push:
+    branches:
+      - 'vite'
+jobs:
+  Explore-GitHub-Actions:
+    runs-on: ubuntu-latest
+    steps:
+      - run: echo "开始部署..."
+      - name: 检出代码
+        uses: actions/checkout@v3.5.2
+        with:
+          ref: vite
+      - name: 配置Node.js环境
+        uses: actions/setup-node@v2.5.2
+        with:
+          node-version: 16.19.0
+      - name: 安装依赖
+        run: npm i
+      - name: 构建程序
+        run: npm run build
+      - name: 部署产物
+        uses: actions/upload-pages-artifact@v1.0.8
+        with:
+          path: dist/
+      
